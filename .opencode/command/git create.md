@@ -1,17 +1,45 @@
 ---
-description: Complete Git repository setup and initial push
+description: Kuloodporny deploy workflow - stage, build, verify, commit, push, verify
 agent: general
 ---
 
-Run complete Git initialization workflow. Usage: /git create [remote-url]
+# Kuloodporny Deploy Workflow
 
-Performs these steps:
-1. git init (if not already initialized)
-2. git add README.md (or all files if no README)
-3. git commit -m "first commit"
-4. git branch -M main
-5. git remote add origin [remote-url] (if URL provided)
-6. git push -u origin main
+Krok 1: Sprawdź status repozytorium
+- `git status` - sprawdź czy są zmiany
+- Jeśli nie ma zmian -> informuj "nie ma co commitować"
+- Jeśli są zmiany -> kontynuuj
 
-If remote already exists, will use existing remote configuration.
-Shows progress and handles errors gracefully.
+Krok 2: Build projektu
+- `npm run build` - zbuduj projekt
+- Sprawdź czy build się powiódł
+- Jeśli nie -> błąd krytyczny, stop
+
+Krok 3: Stage zmian
+- `git add .` - dodaj wszystkie zmiany
+- Sprawdź czy staging się powiódł
+
+Krok 4: Commit
+- `git commit -m "[commit message]"` - commituj zmiany
+- Sprawdź hash commita
+- Jeśli nie -> błąd krytyczny, stop
+
+Krok 5: Push na GitHub
+- `git push` - wypchnij zmiany
+- Sprawdź czy push się powiódł
+- Jeśli nie -> błąd krytyczny, stop
+
+Krok 6: Weryfikacja na GitHub
+- Sprawdź czy commit jest zdalny
+- Jeśli nie -> powtórz push
+- Jeśli nadal nie -> błąd krytyczny
+
+Krok 7: Weryfikacja Netlify
+- Informuj że deploy rozpoczety
+- Nie deklaruj sukcesu bez sprawdzenia
+
+Zasady:
+- NIGDY nie mów "sukces" bez weryfikacji
+- Każdy krok musi być zweryfikowany
+- Przy błędzie - informuj i przerywaj
+- Tylko fakty, zero założeń
