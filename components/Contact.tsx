@@ -80,16 +80,30 @@ const Contact: React.FC = () => {
               <>
                 <h3 className="font-display text-2xl uppercase mb-8">Szybka wycena</h3>
                 <form 
-                  name="contact"
+                  action="mailto:ludvio@gmail.com?subject=FixBuddy - Zapytanie o wycenę"
                   method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
-                  onSubmit={handleSubmit}
+                  enctype="text/plain"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsSubmitting(true);
+                    const form = e.target as HTMLFormElement;
+                    const nameInput = form.querySelector('[name="name"]') as HTMLInputElement;
+                    const phoneInput = form.querySelector('[name="phone"]') as HTMLInputElement;
+                    const locationInput = form.querySelector('[name="location"]') as HTMLSelectElement;
+                    const messageInput = form.querySelector('[name="message"]') as HTMLTextAreaElement;
+                    
+                    const emailBody = `Imię: ${nameInput.value}%0ATelefon: ${phoneInput.value}%0ALokalizacja: ${locationInput.value}%0A%0AOpis usługi:%0A${messageInput.value}`;
+                    window.location.href = `mailto:ludvio@gmail.com?subject=FixBuddy - Zapytanie o wycenę&body=${emailBody}`;
+                    
+                    setTimeout(() => {
+                      setIsSubmitting(false);
+                      setSubmitted(true);
+                      form.reset();
+                      setTimeout(() => setSubmitted(false), 5000);
+                    }, 500);
+                  }}
                   className="space-y-8"
                 >
-                  {/* Honeypot field for spam protection */}
-                  <input type="hidden" name="bot-field" />
-                  <input type="hidden" name="form-name" value="contact" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Imię i Nazwisko</label>
