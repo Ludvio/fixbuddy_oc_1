@@ -129,6 +129,16 @@ const Contact: React.FC = () => {
                   </div>
                   
                   <div className="space-y-2">
+                    <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Email (opcjonalnie)</label>
+                    <input 
+                      name="email"
+                      type="email" 
+                      className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all" 
+                      placeholder="email@przyklad.com" 
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
                     <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Gdzie mieszkasz?</label>
                     <select 
                       name="location"
