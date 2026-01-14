@@ -1,0 +1,8 @@
+{
+  "name": "1.2FixBuddy - Rafał Walczyński",
+  "description": "A personal, craftsman-style website for a one-person repair and maintenance service. Features a warm, editorial design.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
