@@ -9,7 +9,6 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Netlify Forms - native form submission
     const form = e.target as HTMLFormElement;
     
     // Submit to Netlify
@@ -21,13 +20,11 @@ const Contact: React.FC = () => {
       setIsSubmitting(false);
       setSubmitted(true);
       form.reset();
-      // Reset po 5 sekundach
       setTimeout(() => setSubmitted(false), 5000);
     })
     .catch((error) => {
-      console.error('Wysyłanie nie powiodło się:', error);
       setIsSubmitting(false);
-      alert('Wystąpił błąd. Spróbuj ponownie lub zadzwoń: 521 340 1564');
+      alert('Błąd. Zadzwoń: 521 340 1564');
     });
   };
 
