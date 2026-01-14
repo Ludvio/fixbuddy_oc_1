@@ -9,18 +9,13 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Netlify Forms integration
+    // Netlify Forms - native form submission
     const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    
-    // Add Netlify-specific fields
-    formData.append('form-name', 'contact');
     
     // Submit to Netlify
     fetch('/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(formData as any).toString(),
+      body: new FormData(form),
     })
     .then(() => {
       setIsSubmitting(false);
@@ -97,6 +92,7 @@ const Contact: React.FC = () => {
                 >
                   {/* Honeypot field for spam protection */}
                   <input type="hidden" name="bot-field" />
+                  <input type="hidden" name="form-name" value="contact" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Imię i Nazwisko</label>
