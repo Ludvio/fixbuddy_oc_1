@@ -19,3 +19,10 @@
   for = "/*.mjs"
   [headers.values]
     Content-Type = "application/javascript"
+
+# Netlify Forms configuration
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"

@@ -9,17 +9,36 @@ const Contact: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Symulacja wysyłania
-    setTimeout(() => {
+    // Netlify Forms integration
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Add Netlify-specific fields
+    formData.append('form-name', 'contact');
+    
+    // Submit to Netlify
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData as any).toString(),
+    })
+    .then(() => {
       setIsSubmitting(false);
       setSubmitted(true);
+      form.reset();
       // Reset po 5 sekundach
       setTimeout(() => setSubmitted(false), 5000);
-    }, 1500);
+    })
+    .catch((error) => {
+      console.error('Wysyłanie nie powiodło się:', error);
+      setIsSubmitting(false);
+      alert('Wystąpił błąd. Spróbuj ponownie lub zadzwoń: 521 340 1564');
+    });
   };
 
   return (
     <div className="py-12">
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
         <div className="lg:col-span-5 space-y-12">
           <div>
@@ -68,21 +87,46 @@ const Contact: React.FC = () => {
             ) : (
               <>
                 <h3 className="font-display text-2xl uppercase mb-8">Szybka wycena</h3>
-                <form onSubmit={handleSubmit} className="space-y-8">
+                <form 
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                  className="space-y-8"
+                >
+                  {/* Honeypot field for spam protection */}
+                  <input type="hidden" name="bot-field" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Imię i Nazwisko</label>
-                      <input id="contact-name" required type="text" className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all" placeholder="Np. Jan Kowalski" />
+                      <input 
+                        id="contact-name" 
+                        name="name"
+                        required 
+                        type="text" 
+                        className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all" 
+                        placeholder="Np. Jan Kowalski" 
+                      />
                     </div>
                     <div className="space-y-2">
                       <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Numer Telefonu</label>
-                      <input required type="tel" className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all" placeholder="+48 ___ ___ ___" />
+                      <input 
+                        name="phone"
+                        required 
+                        type="tel" 
+                        className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all" 
+                        placeholder="+48 ___ ___ ___" 
+                      />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
                     <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Gdzie mieszkasz?</label>
-                    <select className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium appearance-none cursor-pointer">
+                    <select 
+                      name="location"
+                      className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium appearance-none cursor-pointer"
+                    >
                       <option>Bibice</option>
                       <option>Zielonki / Węgrzce</option>
                       <option>Michałowice</option>
@@ -93,7 +137,13 @@ const Contact: React.FC = () => {
 
                   <div className="space-y-2">
                     <label className="font-mono text-[10px] uppercase text-stone-400 font-bold tracking-widest">Co mamy zrobić?</label>
-                    <textarea required rows={3} className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all resize-none" placeholder="Np. Malowanie 2 pokoi, ul. Spacerowa..."></textarea>
+                    <textarea 
+                      name="message"
+                      required 
+                      rows={3} 
+                      className="w-full bg-stone-50 border-b-2 border-stone-200 p-4 focus:border-blueprint outline-none font-medium transition-all resize-none" 
+                      placeholder="Np. Malowanie 2 pokoi, ul. Spacerowa..."
+                    ></textarea>
                   </div>
 
                   <button 
