@@ -147,6 +147,20 @@
 </script>
 </head>
 <body class="font-sans antialiased selection-custom">
+    <!-- Hidden Netlify form for detection -->
+    <form name="contact" data-netlify="true" style="display: none;">
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="text" name="name" />
+        <input type="tel" name="phone" />
+        <select name="location">
+            <option>Bibice</option>
+            <option>Zielonki</option>
+            <option>Michałowice</option>
+            <option>Kraków Północ</option>
+        </select>
+        <textarea name="message"></textarea>
+    </form>
+    
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
     <script src="https://unpkg.com/lucide@latest"></script>

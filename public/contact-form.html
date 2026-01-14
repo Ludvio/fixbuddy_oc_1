@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixBuddy - Kontakt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50">
+    <div class="min-h-screen flex items-center justify-center p-6">
+        <div class="bg-white p-8 max-w-md w-full shadow-lg">
+            <h1 class="text-2xl font-bold mb-6">FixBuddy - Kontakt</h1>
+            
+            <form 
+                name="contact" 
+                method="POST" 
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                action="/success"
+                class="space-y-4"
+            >
+                <input type="hidden" name="bot-field" />
+                <input type="hidden" name="form-name" value="contact" />
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Imię</label>
+                    <input type="text" name="name" required class="w-full border p-2 rounded">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Telefon</label>
+                    <input type="tel" name="phone" required class="w-full border p-2 rounded">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Lokalizacja</label>
+                    <select name="location" required class="w-full border p-2 rounded">
+                        <option>Bibice</option>
+                        <option>Zielonki</option>
+                        <option>Michałowice</option>
+                        <option>Kraków Północ</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-1">Opis usługi</label>
+                    <textarea name="message" required class="w-full border p-2 rounded" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full bg-stone-800 text-white p-3 rounded hover:bg-stone-700">
+                    Wyślij
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
